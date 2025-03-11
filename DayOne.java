@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class DayOne{
 
@@ -58,6 +60,8 @@ public class DayOne{
 
     public static void main(String[] args){
 
+        final Logger logger = Logger.getLogger(DayOne.class.getName());
+
         List<Integer> listOne = Arrays.asList(3, 4, 2, 1, 3, 3);
         List<Integer> listTwo = Arrays.asList(4, 3, 5, 3, 9, 3);
 
@@ -65,13 +69,14 @@ public class DayOne{
 
         try {
             totalDistance = distance(listOne, listTwo);
-            System.out.println("The total distance between the lists is " + totalDistance);
+            String result = "The total distance between the lists is " + totalDistance;
+            logger.log(Level.INFO, result);
         }
         catch(NullPointerException e){
-            System.out.println("One of the lists has a null value");
+            logger.log(Level.INFO, "One of the lists has a null value");
         }
         catch (Exception e) {
-           System.out.println("Error Found");
+          logger.log(Level.INFO, "Error Found");
         }
     }
 }
