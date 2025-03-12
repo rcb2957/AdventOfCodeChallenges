@@ -1,3 +1,9 @@
+def update_change(difference):
+    if difference > 0:
+        return 1
+    if difference < 0:
+        return -1
+
 def check_change(change, difference):
     if (change == 1 & difference < 0) or (change == -1 & difference > 0):
         return False
@@ -13,17 +19,16 @@ def check_array(array_list):
             difference = compare - element
             
             if change == 0:
-                
-                if difference > 0:
-                    change = 1
-                if difference < 0:
-                    change = -1
+                change = update_change(difference)
             
             if check_change(change, difference) == False:
                 return False
             
             if difference > 3 | difference < -3 | difference == 0:
                 return False
+        
+        compare = element
+    
     return True
 
 def check(main_list):
