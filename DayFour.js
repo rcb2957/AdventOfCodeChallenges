@@ -17,6 +17,10 @@ function check_match(array, row, cell){
 
 }
 
+function find_m(){
+    
+}
+
 function main(){
     let array = ['MMMSXXMASM', 'MSAMXMSMSA', 'AMXSXMAAMM', 
                 'MSAMASMSMX', 'XMASAMXAMM', 'XXAMMXXAMA', 
