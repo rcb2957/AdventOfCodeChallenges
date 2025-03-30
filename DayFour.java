@@ -19,9 +19,9 @@ public class DayFour{
 
     // }
 
-    // function find_m(){
+    public static find_m(){
         
-    // }
+    }
 
     // public void print_double_array(double_array){
     //     double_array.forEach(row => {
