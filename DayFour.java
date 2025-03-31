@@ -1,24 +1,20 @@
-
-
 public class DayFour{
 
-    public static char[][] wordSearch(String grid){
+    public void wordSearch(String grid){
         char[][] chars = stringToDoubleArray(grid);
+        boolean[][] foundWords = new boolean[chars.length][chars[0].length];
         for(int i = 0; i < chars.length; i++){
             for(int j = 0; j < chars[i].length; j++){
-                if(grid.charAt(i) == 'X'){
-                    // check_match(double_array, i, j);
-
-                } else {
-                    chars[i][j] = '.';
+                if(chars[i][j] == 'X'){
+                    foundWords = findM(chars, foundWords, i, j);
                 }
             }
         }
         
-        return chars;
+        printDoubleArray(chars, foundWords);
     }
 
-    public static char[][] stringToDoubleArray(String string){
+    private char[][] stringToDoubleArray(String string){
         String[] lines = string.split("\n");
         char[][] arrayGrid = new char[lines.length][lines[0].length()];
         for(int i = 0; i < lines.length; i++){
@@ -27,70 +23,71 @@ public class DayFour{
         return arrayGrid;
     }
 
-    public static int[] find_m(char[][] grid, int row, int cell){
+    private boolean[][] findM(char[][] grid, boolean[][] found, int row, int cell){
 
+       found = checkRowDir(grid, found, row, cell, 0);
+
+        if(row - 3 > 0){
+            found = checkRowDir(grid, found, row, cell, -1);   
+        }
+
+        if(row + 3 < grid[0].length){
+            found = checkRowDir(grid, found, row, cell, 1);
+        }
+        return found;
+    }
+
+    private boolean[][] checkRowDir(char[][] grid, boolean[][] found, int row, int cell, int rowDir){
+        if(grid[row+rowDir][cell] == 'M' && checkXMAS(grid, row, cell, rowDir, 0)){
+            found[row][cell] = true;
+            found[row+rowDir][cell] = true;
+            found[row+rowDir*2][cell] = true;
+            found[row+rowDir*3][cell] = true;
+            // printDoubleArray(grid, found);
+        }
         if(cell - 3 > 0){
-            if(grid[row][cell-1] == 'M'){
-                checkXMAS(grid, row, cell, 0, -1);
+            if(grid[row+rowDir][cell-1] == 'M'&& checkXMAS(grid, row, cell, rowDir, -1)){
+                found[row][cell] = true;
+                found[row+rowDir][cell-1] = true;
+                found[row+rowDir*2][cell-2] = true;
+                found[row+rowDir*3][cell-3] = true;
+                // printDoubleArray(grid, found);
             }
         }
         if(cell + 3 < grid[0].length){
-            if(grid[row][cell+1] == 'M'){
-
+            if(grid[row+rowDir][cell+1] == 'M' && checkXMAS(grid, row, cell, rowDir, 1)){
+                found[row][cell] = true;
+                found[row+rowDir][cell+1] = true;
+                found[row+rowDir*2][cell+2] = true;
+                found[row+rowDir*3][cell+3] = true;
+                // printDoubleArray(grid, found);
             }
         }
-
-        if(row - 3 > 0){
-            if(grid[row-1][cell] == 'M'){
-
-            }
-            if(cell - 3 > 0){
-                if(grid[row-1][cell-1] == 'M'){
-
-                }
-            }
-            if(cell + 3 < grid[0].length){
-                if(grid[row-1][cell+1] == 'M'){
-
-                }
-            }    
-        }
-
-        if(row + 3 < grid[0].length - 1){
-            if(grid[row+1][cell] == 'M'){
-
-            }
-            if(cell - 3 > 0){
-                if(grid[row+1][cell-1] == 'M'){
-
-                }
-            }
-            if(cell + 3 < grid[0].length){
-                if(grid[row+1][cell+1] == 'M'){
-
-                }
-            }    
-        }
-        return [3,3,3];
+        return found;
     }
 
-    public static boolean checkXMAS(char[][] grid, int row, int cell, int rowDir, int cellDir){
-        return grid[row+2*rowDir][cell+2*cellDir] == 'A' && grid[row+2*rowDir][cell+2*cellDir] == 'S';
+    private boolean checkXMAS(char[][] grid, int row, int cell, int rowDir, int cellDir){
+        return grid[row+2*rowDir][cell+2*cellDir] == 'A' && grid[row+3*rowDir][cell+3*cellDir] == 'S';
     }
 
-    // public void print_double_array(double_array){
-    //     double_array.forEach(row => {
-    //         row.forEach(cell =>{
-    //             console.log(cell)
-    //         });
-    //         console.log('\n');
-    //     });
-    // }
+    public void printDoubleArray(char[][] doubleArray, boolean[][] foundWords){
+        for(int i = 0; i < doubleArray.length; i++){
+            for(int j = 0; j < doubleArray[0].length; j++){
+                if(foundWords[i][j]){
+                    System.out.print(doubleArray[i][j]);
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args){
+        DayFour obj = new DayFour();
         String grid = "MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\n"
                     + "XXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX";
-        System.out.println(wordSearch(grid));
+        obj.wordSearch(grid);
     }
 }
 
