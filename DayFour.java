@@ -93,6 +93,3 @@ public class DayFour{
         System.out.println("Total XMAS: " + countXMAS);
     }
 }
-
-// Add coordinates for row and column
-// Store a list of row and columns that are part of XMAS
