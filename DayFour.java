@@ -1,5 +1,7 @@
 public class DayFour{
 
+    public static int countXMAS = 0;
+
     public void wordSearch(String grid){
         char[][] chars = stringToDoubleArray(grid);
         boolean[][] foundWords = new boolean[chars.length][chars[0].length];
@@ -43,7 +45,7 @@ public class DayFour{
             found[row+rowDir][cell] = true;
             found[row+rowDir*2][cell] = true;
             found[row+rowDir*3][cell] = true;
-            // printDoubleArray(grid, found);
+            countXMAS++;
         }
         if(cell - 3 > 0){
             if(grid[row+rowDir][cell-1] == 'M'&& checkXMAS(grid, row, cell, rowDir, -1)){
@@ -51,7 +53,7 @@ public class DayFour{
                 found[row+rowDir][cell-1] = true;
                 found[row+rowDir*2][cell-2] = true;
                 found[row+rowDir*3][cell-3] = true;
-                // printDoubleArray(grid, found);
+                countXMAS++;
             }
         }
         if(cell + 3 < grid[0].length){
@@ -60,7 +62,7 @@ public class DayFour{
                 found[row+rowDir][cell+1] = true;
                 found[row+rowDir*2][cell+2] = true;
                 found[row+rowDir*3][cell+3] = true;
-                // printDoubleArray(grid, found);
+                countXMAS++;
             }
         }
         return found;
@@ -88,6 +90,7 @@ public class DayFour{
         String grid = "MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\n"
                     + "XXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX";
         obj.wordSearch(grid);
+        System.out.println("Total XMAS: " + countXMAS);
     }
 }
 
