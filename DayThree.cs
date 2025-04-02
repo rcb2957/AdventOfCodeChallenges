@@ -4,8 +4,8 @@ public class DayThree{
         // Loop through string until mul is found
         for(int i = 0; i < input.length(); i++){
             if(current string = 'mul('){
-                while(i = an integer){
-
+                while(input.charAt(i).IsDigit()){
+                    i++;
                 }
                 if(input == comma){
 
