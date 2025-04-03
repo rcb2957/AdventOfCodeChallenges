@@ -6,7 +6,6 @@ public class DayThree{
         for(int i = 0; i < input.length(); i++){
             string a = "";
             string b = "";
-            bool corrupted = false;
             if(current string = 'mul('){
                 while(input.charAt(i).IsDigit()){
                     i++;
