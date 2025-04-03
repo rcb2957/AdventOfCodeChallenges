@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+
 public class DayThree{
 
     public void search(string input){
         // Loop through string until mul is found
         int mul_count = 0
+        Queue<int> products = new Queue<int>();
         for(int i = 0; i < input.length(); i++){
             string a = "";
             string b = "";
@@ -20,15 +23,23 @@ public class DayThree{
                 }
                 if(input.charAt(i) == ')' && !string.IsNullOrEmpty(a) && !string.IsNullOrEmpty(b)){
                     mul_count++;
-                    multiply(a, b);
+                    products.Enqueue(multiply(a, b));
                 }
             }
         }
 
     }
 
-    public int multiply(string x, string y){
+    private int multiply(string x, string y){
         return Int32.Parse(x) * Int32.Parse(y)
+    }
+
+    private int mul_total(Queue<int> products){
+        int total = 0;
+        Queue<int> productsCopy = new Queue<int>(products.ToArray());
+        foreach(product in products){
+            total += product;
+        }
     }
 
     public static void main(string[] args){
