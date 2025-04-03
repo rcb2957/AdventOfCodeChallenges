@@ -3,13 +3,12 @@ using System.Collections.Generic;
 public class DayThree{
 
     public void search(string input){
-        // Loop through string until mul is found
-        int mul_count = 0
-        Queue<int> products = new Queue<int>();
-        for(int i = 0; i < input.length(); i++){
+        int mul_count = 0 // Total number of uncorrupted mul
+        Queue<int> products = new Queue<int>(); //Queue of all the products multiplied
+        for(int i = 0; i < input.length()-3; i++){
             string a = "";
             string b = "";
-            if(current string = 'mul('){
+            if(input.Substring(i, i+3) = 'mul('){
                 while(input.charAt(i).IsDigit()){
                     i++;
                     a += input.charAt(i);
@@ -27,7 +26,6 @@ public class DayThree{
                 }
             }
         }
-
     }
 
     private int multiply(string x, string y){
