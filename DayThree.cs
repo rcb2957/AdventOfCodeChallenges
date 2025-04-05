@@ -1,50 +1,55 @@
+using System;
 using System.Collections.Generic;
 
-public class DayThree{
-
-    //process string input
+namespace MyDayThree
+{
+  class DayThree
+  {
     public int search(string input){
 
         Queue<int> products = new Queue<int>(); //Queue of all the products multiplied
 
-        for(int i = 0; i < input.length()-3; i++){
+        for(int i = 0; i < input.Length-4; i++){
             string a = "";
             string b = "";
-            if(input.Substring(i, i+3) = 'mul('){
+            if(input.Substring(i, 4).Equals("mul(")){
+                i+=4;
+               
                 // Retrieve value of the first digit
-                while(input.charAt(i).IsDigit()){
-                    i++;
-                    if(i >= input.length()){
+                while(Char.IsDigit(input[i])){
+                    if(i >= input.Length){
                         break;
                     }
-                    a += input.charAt(i);
+                    a += input[i];
+                    i++;
                 }
 
-                if(i >= input.length()){
+                if(i >= input.Length){
                     break;
                 }
 
                 //Check for comma to verify mul input is uncorrupted
-                if(input.charAt(i) == ','){
+                if(input[i] == ','){
                     i++;
                 }
 
-                if(i >= input.length()){
+                if(i >= input.Length){
                     break;
                 }
 
                 // Retrieve value of the second digit
-                while(input.charAt(i).IsDigit()){
-                    i++;
-                    if(i >= input.length()){
+                while(Char.IsDigit(input[i])){
+                    if(i >= input.Length){
                         break;
                     }
-                    b += input.charAt(i);
+                    b += input[i];
+                    i++;
                 }
 
                 //Check if string was corrupted and multiply values if uncorrupted
-                if(input.charAt(i) == ')' && !string.IsNullOrEmpty(a) && !string.IsNullOrEmpty(b)){
+                if(input[i] == ')' && !string.IsNullOrEmpty(a) && !string.IsNullOrEmpty(b)){
                     products.Enqueue(multiply(a, b));
+                    //Console.WriteLine("IM BACK");
                 }
             }
         }
@@ -52,7 +57,7 @@ public class DayThree{
     }
 
     private int multiply(string x, string y){
-        return Int32.Parse(x) * Int32.Parse(y)
+        return Int32.Parse(x) * Int32.Parse(y);
     }
 
     // Calculate the sum of all the products
@@ -61,17 +66,19 @@ public class DayThree{
         int total = 0;
         Queue<int> productsCopy = new Queue<int>(products.ToArray());
 
-        foreach(product in products){
+        foreach(int product in products){
             total += product;
+            Console.WriteLine(product);
         }
         return total;
     }
 
-    public static void main(string[] args){
+    public static void Main(string[] args){
 
         DayThree day = new DayThree();
-        int total = day.search("mul(3,4)*&mul[0,9)");
+        int total = day.search("mul(13,4)*&mul[0,9)");
         Console.Write("The total sum of the multiplied values is ");
         Console.Write(total);
     }
+  }
 }
