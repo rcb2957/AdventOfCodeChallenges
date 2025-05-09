@@ -5,20 +5,22 @@ namespace HelloWorld
 {
   class FifthDay {
         
-        public List<string> check_pages(string list_string, string order_string){
+        public List<(string, int)> check_pages(string list_string, string order_string){
             Tuple<int, int>[] order = get_order(order_string);
             string[] list_array = list_string.Split('\n');
-            List<string> safe_rows = new List<string>();
+            List<(string, int)> safe_rows = new List<(string, int)>();
+            //Tuple<string, int> safe_rows = new Tuple<string, int>();
             
             for(int i = 0; i < list_array.Length; i++){
-                if(check_row(list_array[i], order)){
-                	safe_rows.Add(list_array[i]);
+            	int middle_int = check_row(list_array[i], order);
+                if(middle_int > 0){
+                	safe_rows.Add((list_array[i], middle_int));
                 }
             }
             return safe_rows;
         }
 
-        public bool check_row(string row, Tuple<int, int>[] order){
+        public int check_row(string row, Tuple<int, int>[] order){
             string[] row_array = row.Split(',');
             int[] pages = new int[row_array.Length];
             int i = 0;
@@ -27,13 +29,13 @@ namespace HelloWorld
                 pages[i] = Int32.Parse(page);
                 for(int j = 0; j < i; j++){
                     if(!check_order(order, pages[j], pages[i])){
-                        return false;
+                        return 0;
                     }
                 }
                 i++;
             }
             
-            return true;
+            return pages[row_array.Length/2];
         }
 
         //new method to loop through order to verify all pages match it
@@ -64,11 +66,15 @@ namespace HelloWorld
         	FifthDay day = new FifthDay();
             string order = "23|45\n34|35\n34|45";
             string list_string = "23,45,34\n23,34,45";
-
-            List<string> result = day.check_pages(list_string, order);
-            foreach(string safe_row in result){
-				Console.WriteLine(safe_row);
+            
+			int sum = 0;
+            List<(string, int)> result = day.check_pages(list_string, order);
+            
+            foreach((string, int) safe_row in result){
+				Console.WriteLine(safe_row.Item1);
+                sum = sum + safe_row.Item2;
 			}
+            Console.WriteLine("Sum is: " + sum);
         }
     }
 }
