@@ -8,7 +8,7 @@ def make_grid(grid_string):
 
     return grid
     
-def locate_start_position(grid):
+def locate_start_pos(grid):
     for grid_row in grid:
         if '^' in grid_row:
             return (grid_row.index('^'), grid.index(grid_row))
@@ -17,7 +17,7 @@ def locate_start_position(grid):
 def main():
     grid_string = "....#.....\n.........#\n..........\n..#.......\n.......#..\n..........\n.#..^.....\n........#.\n#.........\n......#..."
     grid = make_grid(grid_string)
-    print(locate_cursor(grid))
+    print(locate_start_pos(grid))
     print(grid)
 
 if __name__=="__main__":
