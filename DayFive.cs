@@ -1,31 +1,45 @@
 using System;
 using System.Collections.Generic;
 
-namespace FifthDay
+namespace HelloWorld
 {
-    class FifthDay {
+  class FifthDay {
         
-        public int check_order(string list_string, string orderString){
-            Tuple<int, int> order = get_order(order);
+        public List<string> check_pages(string list_string, string order_string){
+            Tuple<int, int>[] order = get_order(order_string);
             string[] list_array = list_string.Split('\n');
+            List<string> safe_rows = new List<string>();
+            
             for(int i = 0; i < list_array.Length; i++){
-                check_row(list_array[i]);
+                if(check_row(list_array[i], order)){
+                	safe_rows.Add(list_array[i]);
+                }
             }
-            return 0;
+            return safe_rows;
         }
 
-        public boolean check_row(string row){
-            string[] pages_string = list_array[i].Split(',');
-            int[] pages = new int[pages_string.Length];
+        public bool check_row(string row, Tuple<int, int>[] order){
+            string[] row_array = row.Split(',');
+            int[] pages = new int[row_array.Length];
             int i = 0;
-            foreach(string page in pages_string){
+            
+            foreach(string page in row_array){
                 pages[i] = Int32.Parse(page);
+                for(int j = 0; j < i; j++){
+                    if(!check_order(order, pages[j], pages[i])){
+                        return false;
+                    }
+                }
                 i++;
             }
+            
+            return true;
         }
 
-        public boolean loop_order(Tuple<int, int>[]order, int a, int b){
-            for(Tuple<int, int> tuple in order){
+        //new method to loop through order to verify all pages match it
+
+        public bool check_order(Tuple<int, int>[]order, int a, int b){
+            foreach(Tuple<int, int> tuple in order){
                 if(b == tuple.Item1 && a == tuple.Item2){
                     return false;
                 }
@@ -33,15 +47,16 @@ namespace FifthDay
             return true;
         }
 
-        public Tuple<int, int>[] getOrder(string order){
+        public Tuple<int, int>[] get_order(string order){
             string[] order_array = order.Split('\n');
             Tuple<int, int>[] order_rules = new Tuple<int, int>[order_array.Length];
-            int tuple_index = 0
+            int tuple_index = 0;
 
-            for(string element in order_array){
-                order_rules[tuple_index] = (Int32.Parse(element.Split('|')[0]), Int32.Parse(element.Split('|')[0]));
+            foreach(string element in order_array){
+                order_rules[tuple_index] = new Tuple<int, int>(Int32.Parse(element.Split('|')[0]), Int32.Parse(element.Split('|')[1]));
                 tuple_index++;
             }
+            
             return order_rules;
         }
 
@@ -50,7 +65,10 @@ namespace FifthDay
             string order = "23|45\n34|35\n34|45";
             string list_string = "23,45,34\n23,34,45";
 
-            day.check_order(list_string, order);
+            List<string> result = day.check_pages(list_string, order);
+            foreach(string safe_row in result){
+				Console.WriteLine(safe_row);
+			}
         }
     }
 }
