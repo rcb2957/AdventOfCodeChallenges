@@ -1,4 +1,19 @@
+fun split(input){
+    var lines = input.split("\n)
+    for(line in lines){
+        var equation = line.split(" ")
+        process_equation(equation)
+    }
+}
 
+fun process_equation(equation){
+    var line_result: Int = 0
+    for(value in equation){
+        if(line_result == 0){
+            line_result = value
+        }
+    }
+}
 
 fun main() {
   val txt = """
