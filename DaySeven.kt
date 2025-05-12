@@ -1,18 +1,45 @@
 fun split(input){
-    var lines = input.split("\n)
+    val lines = input.split("\n)
     for(line in lines){
-        var equation = line.split(" ")
+        val equation = line.split(" ")
         process_equation(equation)
     }
 }
 
 fun process_equation(equation){
-    var line_result: Int = 0
+    val line_result: Int = 0
     for(value in equation){
         if(line_result == 0){
-            line_result = value
+            line_result = value.substring(0, value.length-1)
         }
     }
+}
+
+fun mult_or_add(mult_array, equation){
+    result = equation[1]
+    val i = 2
+    val first_false = -1
+    for(operation in mult_array){
+        if(operation == true){
+            result = equation[i] * result
+        } else {
+            result = equation[i] + result
+            if(first_false = -1){
+                first_false = i - 2
+            }
+        }
+        i++
+    }
+    adjust_mult_or_add(mult_array, first_false)
+}
+
+fun adjust_mult_or_add(mult_array, first_false){
+    val j = 0
+    while(j < first_false){
+        mult_array[j] = false
+    }
+    mult_array[first_false] = true
+    return mult_array
 }
 
 fun main() {
